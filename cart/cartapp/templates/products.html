@@ -1,0 +1,22 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for item in products %}
+    <hr> 
+    <p> {{ item.name }}</p>
+    <p> {{ item.cost }}</p>
+    <form method="POST" class="add-to-cart">
+        {% csrf_token %}
+        <input type="hidden" name="product_pk" value="{{ item.pk}}">
+        <button> додати до кошика</button>
+    </form>
+    
+    
+    {% endfor %}
+</body>
+</html>
