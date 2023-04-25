@@ -17,15 +17,17 @@ def show_products(request):
     return response
 
 def show_cart(request):
-    if "product_pk" in request.COOKIES: #
-        
-        
-        products_pk = products_pk.split(' ')
+    products_pk = request.COOKIES.get('product_pk', '').split(' ')
+    if request.method == 'POST':
+        index = int(request.POST.get('index'))
+        products_pk.pop(index)
 
-        list_products = list()
-        for product_pk in products_pk:
-            list_products.append(Product.objects.get(pk=product_pk))
-        response = render(request,"cart.html",context={"products": list_products})
-    else:
-        response = render(request,"cart.html",context={"products":list()})
+    list_products = []
+    for product_pk in products_pk:
+        list_products.append(Product.objects.get(pk=product_pk))
+    response = render(request,"cart.html",context={"products": list_products})
+    
+    if request.method == 'POST':
+        response.set_cookie('product_pk', ' '.join(products_pk))
+    
     return response

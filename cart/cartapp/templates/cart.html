@@ -15,6 +15,7 @@
             <form method="POST" class="delet_from_cart">
                 {% csrf_token %}
                 <input type="hidden" name="product_pk" value="{{ product.pk}}">
+                <input type='hidden' name='index' value="{{forloop.counter0}}">
                 <button> Видалити до кошика</button>
             </form>
         </div>
